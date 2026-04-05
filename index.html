@@ -350,22 +350,20 @@ function startSession() {
   if (ws) return;
   setStatus('Conectando…'); setState('idle');
 
-  const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${apiKey}`;
+  const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
   ws = new WebSocket(url);
 
   ws.onopen = () => {
     ws.send(JSON.stringify({
-      setup: {
+      config: {
         model: 'models/gemini-2.0-flash-live-001',
-        generation_config: {
-          response_modalities: ['AUDIO'],
-          speech_config: {
-            voice_config: {
-              prebuilt_voice_config: { voice_name: 'Aoede' }
-            }
+        responseModalities: ['AUDIO'],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: { voiceName: 'Aoede' }
           }
         },
-        system_instruction: { parts: [{ text: SYSTEM }] }
+        systemInstruction: { parts: [{ text: SYSTEM }] }
       }
     }));
   };
@@ -376,14 +374,11 @@ function startSession() {
     try { msg = JSON.parse(raw); } catch { return; }
 
     // Sesión lista → abrir micrófono y disparar saludo
-    if (msg.setupComplete) {
+    if (msg.setupComplete !== undefined) {
       sessionActive = true;
       await startMic();
       ws.send(JSON.stringify({
-        client_content: {
-          turns: [{ role: 'user', parts: [{ text: 'Hola' }] }],
-          turn_complete: true
-        }
+        realtimeInput: { text: 'Hola' }
       }));
     }
 
@@ -394,9 +389,16 @@ function startSession() {
           setState('speaking'); setStatus('Hablando…');
           playPcm16(part.inlineData.data);
         }
-        // Transcripción de texto (si la API la incluye)
         if (part.text) addBubble('luna', part.text);
       }
+    }
+
+    // Transcripciones
+    if (msg.serverContent?.outputTranscription?.text && msg.serverContent.outputTranscription.finished) {
+      addBubble('luna', msg.serverContent.outputTranscription.text);
+    }
+    if (msg.serverContent?.inputTranscription?.text && msg.serverContent.inputTranscription.finished) {
+      addBubble('user', msg.serverContent.inputTranscription.text);
     }
 
     // Turno completado → volver a escuchar
@@ -447,8 +449,8 @@ async function startMic() {
       for (let i = 0; i < f32.length; i++)
         i16[i] = Math.max(-32768, Math.min(32767, f32[i] * 32768 | 0));
       ws.send(JSON.stringify({
-        realtime_input: {
-          media_chunks: [{ data: toB64(i16.buffer), mime_type: 'audio/pcm;rate=16000' }]
+        realtimeInput: {
+          audio: { data: toB64(i16.buffer), mimeType: 'audio/pcm;rate=16000' }
         }
       }));
     };

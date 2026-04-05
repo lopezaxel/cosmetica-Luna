@@ -353,7 +353,7 @@ function startSession() {
   const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
   ws = new WebSocket(url);
 
-  ws.onopen = async () => {
+  ws.onopen = () => {
     ws.send(JSON.stringify({
       config: {
         model: 'models/gemini-3.1-flash-live-preview',
@@ -366,16 +366,21 @@ function startSession() {
         systemInstruction: { parts: [{ text: SYSTEM }] }
       }
     }));
-    // La API no requiere esperar setupComplete — iniciamos directo
-    sessionActive = true;
-    await startMic();
-    ws.send(JSON.stringify({ realtimeInput: { text: 'Hola' } }));
+    setStatus('Conectando…');
   };
 
   ws.onmessage = async (evt) => {
     const raw = evt.data instanceof Blob ? await evt.data.text() : evt.data;
     let msg;
     try { msg = JSON.parse(raw); } catch { return; }
+
+    // Servidor listo → arrancamos micrófono y disparamos saludo
+    if ('setupComplete' in msg) {
+      sessionActive = true;
+      await startMic();
+      ws.send(JSON.stringify({ realtimeInput: { text: 'Hola' } }));
+      return;
+    }
 
     // Audio de respuesta
     if (msg.serverContent?.modelTurn?.parts) {

@@ -1,286 +1,963 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Bella Studio – Centro de Estética</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --gold: #C9975A;
-  --gold-soft: #E8C49A;
-  --bg: #0C0B09;
-  --surface: #141210;
-  --border: rgba(201,151,90,0.15);
-  --text: #F2EAE0;
-  --muted: rgba(242,234,224,0.45);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:300; }
-body::after {
-  content:''; position:fixed; inset:0; z-index:999; pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity:.5;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bella Studio – Centro de Estética</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9975A;
+      --gold-soft: #E8C49A;
+      --bg: #0C0B09;
+      --surface: #141210;
+      --border: rgba(201, 151, 90, 0.15);
+      --text: #F2EAE0;
+      --muted: rgba(242, 234, 224, 0.45);
+    }
 
-/* HEADER */
-header {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:1.6rem 2.5rem; border-bottom:1px solid var(--border);
-  position:sticky; top:0; z-index:50;
-  background:rgba(12,11,9,0.92); backdrop-filter:blur(16px);
-}
-.logo { font-family:'Playfair Display',serif; font-size:1.25rem; letter-spacing:.06em; }
-.logo em { color:var(--gold); font-style:italic; }
-nav { display:flex; gap:1.8rem; }
-nav a { font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .25s; }
-nav a:hover { color:var(--gold); }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* HERO */
-.hero {
-  min-height:88vh; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; text-align:center;
-  padding:4rem 2rem; position:relative;
-}
-.hero::before {
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background:radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,151,90,0.07) 0%, transparent 70%);
-}
-.hero-eyebrow { font-size:.65rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:2rem; opacity:0; animation:up .7s .1s forwards; }
-.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,8vw,6rem); font-weight:400; line-height:1.1; max-width:820px; opacity:0; animation:up .7s .2s forwards; }
-.hero h1 em { color:var(--gold); font-style:italic; }
-.hero-sub { margin-top:1.6rem; font-size:.9rem; line-height:1.9; color:var(--muted); max-width:480px; opacity:0; animation:up .7s .3s forwards; }
-.hero-cta { margin-top:3rem; display:flex; flex-direction:column; align-items:center; gap:1rem; opacity:0; animation:up .7s .4s forwards; }
-.cta-main {
-  display:flex; align-items:center; gap:.9rem;
-  background:linear-gradient(135deg,var(--gold),var(--gold-soft));
-  color:#1a0d03; border:none; cursor:pointer;
-  font-family:'DM Sans',sans-serif; font-size:.8rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
-  padding:1rem 2.2rem; border-radius:100px;
-  box-shadow:0 0 40px rgba(201,151,90,0.25); transition:transform .2s, box-shadow .2s;
-}
-.cta-main:hover { transform:translateY(-2px); box-shadow:0 0 60px rgba(201,151,90,0.4); }
-.cta-orb-mini { width:28px; height:28px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#fff5eb,var(--gold)); display:flex; align-items:center; justify-content:center; font-size:.85rem; animation:miniPulse 2s ease-in-out infinite; }
-@keyframes miniPulse { 0%,100%{box-shadow:0 0 0 0 rgba(201,151,90,.5)} 50%{box-shadow:0 0 0 6px rgba(201,151,90,0)} }
-.cta-hint { font-size:.68rem; color:var(--muted); letter-spacing:.1em; display:flex; align-items:center; gap:.6rem; }
-.cta-hint::before,.cta-hint::after { content:''; flex:1; height:1px; background:var(--border); width:40px; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* DIVIDER */
-.divider { display:flex; align-items:center; gap:1.5rem; padding:0 2.5rem; }
-.divider .line { flex:1; height:1px; background:var(--border); }
-.divider .label { font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
 
-/* SERVICES */
-#servicios { padding:5rem 2.5rem 6rem; max-width:1100px; margin:0 auto; }
-.services-header { text-align:center; margin-bottom:3.5rem; }
-.services-header h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:400; }
-.services-header p { margin-top:.7rem; color:var(--muted); font-size:.82rem; letter-spacing:.05em; }
-.services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
-.service-card { background:var(--surface); padding:2.5rem; position:relative; overflow:hidden; transition:background .3s; }
-.service-card:hover { background:#1a1713; }
-.service-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); transform:scaleX(0); transform-origin:center; transition:transform .4s; }
-.service-card:hover::before { transform:scaleX(1); }
-.card-emoji { font-size:1.6rem; margin-bottom:1.4rem; display:block; }
-.card-num { font-size:.6rem; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem; }
-.card-title { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:400; margin-bottom:1.5rem; }
-.price-list { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
-.price-list li { display:flex; justify-content:space-between; align-items:baseline; font-size:.8rem; padding-bottom:.5rem; border-bottom:1px solid rgba(201,151,90,0.08); gap:.8rem; }
-.price-list li:last-child { border-bottom:none; padding-bottom:0; }
-.price-name { color:var(--muted); flex:1; }
-.price-dur { color:var(--muted); font-size:.7rem; opacity:.7; white-space:nowrap; }
-.price-val { color:var(--gold-soft); font-weight:500; white-space:nowrap; }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: .5;
+    }
 
-/* LUNA SECTION */
-.luna-section {
-  text-align:center; padding:4rem 2rem 6rem;
-  border-top:1px solid var(--border);
-  background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(201,151,90,0.06) 0%,transparent 70%);
-}
-.luna-section h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:400; margin-bottom:1rem; }
-.luna-section h2 em { color:var(--gold); font-style:italic; }
-.luna-section p { color:var(--muted); font-size:.88rem; line-height:1.9; max-width:460px; margin:0 auto 2.5rem; }
-.luna-cta-big { display:inline-flex; align-items:center; gap:1.2rem; border:1px solid var(--border); border-radius:100px; padding:1rem 2rem; cursor:pointer; background:transparent; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.8rem; letter-spacing:.15em; text-transform:uppercase; transition:border-color .3s, background .3s; }
-.luna-cta-big:hover { border-color:var(--gold); background:rgba(201,151,90,0.06); }
-.orb-sm { width:40px; height:40px; border-radius:50%; background:radial-gradient(circle at 35% 35%,var(--gold-soft),var(--gold) 60%,#7a4e28); animation:orbPulse 2.5s ease-in-out infinite; flex-shrink:0; }
-@keyframes orbPulse { 0%,100%{box-shadow:0 0 0 0 rgba(201,151,90,.4),0 0 20px rgba(201,151,90,.2)} 50%{box-shadow:0 0 0 10px rgba(201,151,90,.04),0 0 40px rgba(201,151,90,.35)} }
-.steps { display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; margin-top:3.5rem; padding:0 2rem; }
-.step { display:flex; flex-direction:column; align-items:center; gap:.6rem; max-width:150px; }
-.step-icon { width:40px; height:40px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
-.step-num { font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); }
-.step-label { font-size:.75rem; color:var(--muted); text-align:center; line-height:1.5; }
+    /* HEADER */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.6rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(12, 11, 9, 0.92);
+      backdrop-filter: blur(16px);
+    }
 
-/* FOOTER */
-footer { text-align:center; padding:2rem; border-top:1px solid var(--border); font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); }
-footer span { color:var(--gold); }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      letter-spacing: .06em;
+    }
 
-/* FLOATING ORB */
-.orb-float { position:fixed; bottom:1.8rem; right:1.8rem; z-index:200; display:flex; flex-direction:column; align-items:center; gap:.5rem; }
-.orb-tag { font-size:.58rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); background:rgba(12,11,9,.85); border:1px solid var(--border); padding:.28rem .8rem; border-radius:100px; backdrop-filter:blur(8px); opacity:0; animation:up .5s 1s forwards; }
-.orb-btn { width:64px; height:64px; border-radius:50%; cursor:pointer; border:none; background:radial-gradient(circle at 35% 35%,var(--gold-soft),var(--gold) 55%,#7a4e28); display:flex; align-items:center; justify-content:center; font-size:1.5rem; animation:orbPulse 2.5s ease-in-out infinite, up .5s .8s both; transition:transform .2s; position:relative; box-shadow:0 0 0 0 rgba(201,151,90,.5),0 0 24px rgba(201,151,90,.25),inset 0 1px 0 rgba(255,255,255,.2); }
-.orb-btn:hover { transform:scale(1.07); }
-.orb-btn:active { transform:scale(.94); }
-.orb-btn::before,.orb-btn::after { content:''; position:absolute; border-radius:50%; border:1px solid rgba(201,151,90,.35); animation:ring 2.5s ease-out infinite; }
-.orb-btn::after { animation-delay:1.25s; }
-@keyframes ring { 0%{width:64px;height:64px;opacity:.5;top:0;left:0} 100%{width:120px;height:120px;opacity:0;top:-28px;left:-28px} }
+    .logo em {
+      color: var(--gold);
+      font-style: italic;
+    }
 
-/* VOICE MODAL */
-.modal-bg { position:fixed; inset:0; z-index:300; background:rgba(6,5,4,.93); backdrop-filter:blur(18px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; }
-.modal-bg.open { opacity:1; pointer-events:all; }
-.modal { width:min(460px,94vw); background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:2.2rem 2rem; transform:translateY(28px) scale(.98); transition:transform .35s; position:relative; }
-.modal-bg.open .modal { transform:translateY(0) scale(1); }
-.close-btn { position:absolute; top:.9rem; right:1rem; cursor:pointer; background:none; border:none; color:var(--muted); font-size:1.3rem; line-height:1; transition:color .2s; }
-.close-btn:hover { color:var(--gold); }
-.luna-head { display:flex; flex-direction:column; align-items:center; gap:.5rem; margin-bottom:1.8rem; }
-.luna-avatar-orb { width:68px; height:68px; border-radius:50%; background:radial-gradient(circle at 35% 35%,var(--gold-soft),var(--gold) 55%,#7a4e28); display:flex; align-items:center; justify-content:center; font-size:1.8rem; box-shadow:0 0 24px rgba(201,151,90,.3); transition:box-shadow .3s; }
-.luna-avatar-orb.listening { animation:glowListen 1s ease-in-out infinite; }
-.luna-avatar-orb.speaking  { animation:glowSpeak .7s ease-in-out infinite; }
-@keyframes glowListen { 0%,100%{box-shadow:0 0 16px rgba(201,151,90,.3)} 50%{box-shadow:0 0 48px rgba(201,151,90,.75)} }
-@keyframes glowSpeak  { 0%,100%{box-shadow:0 0 20px rgba(201,151,90,.4);transform:scale(1)} 50%{box-shadow:0 0 64px rgba(201,151,90,.9);transform:scale(1.04)} }
-.luna-name-tag { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--gold-soft); }
-.luna-status { font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); min-height:1em; }
-.chat { max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:.7rem; margin-bottom:1.5rem; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
-.bubble { max-width:88%; padding:.75rem 1rem; font-size:.8rem; line-height:1.7; border-radius:2px; animation:up .3s ease; }
-.bubble-luna { background:rgba(201,151,90,.08); border-left:2px solid var(--gold); align-self:flex-start; }
-.bubble-user { background:rgba(255,255,255,.04); border-right:2px solid rgba(255,255,255,.12); align-self:flex-end; color:var(--muted); text-align:right; }
-.controls { display:flex; align-items:center; justify-content:center; }
-.end-btn { width:58px; height:58px; border-radius:50%; cursor:pointer; border:none; background:linear-gradient(135deg,#c0392b,#e74c3c); display:flex; align-items:center; justify-content:center; font-size:1.4rem; box-shadow:0 0 20px rgba(192,57,43,.3); transition:transform .2s; }
-.end-btn:hover { transform:scale(1.06); }
-.end-btn:active { transform:scale(.93); }
-.mic-label { text-align:center; margin-top:.9rem; font-size:.63rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); }
+    nav {
+      display: flex;
+      gap: 1.8rem;
+    }
 
-@keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    nav a {
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
 
-@media(max-width:680px){
-  header { padding:1.2rem 1.5rem; }
-  nav { display:none; }
-  #servicios { padding:3rem 1.5rem 4rem; }
-  .luna-section { padding:3rem 1.5rem 5rem; }
-  .steps { gap:2rem; }
-}
-</style>
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201, 151, 90, 0.07) 0%, transparent 70%);
+    }
+
+    .hero-eyebrow {
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: up .7s .1s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 400;
+      line-height: 1.1;
+      max-width: 820px;
+      opacity: 0;
+      animation: up .7s .2s forwards;
+    }
+
+    .hero h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      margin-top: 1.6rem;
+      font-size: .9rem;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 480px;
+      opacity: 0;
+      animation: up .7s .3s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: up .7s .4s forwards;
+    }
+
+    .cta-main {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      color: #1a0d03;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      border-radius: 100px;
+      box-shadow: 0 0 40px rgba(201, 151, 90, 0.25);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(201, 151, 90, 0.4);
+    }
+
+    .cta-orb-mini {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff5eb, var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      animation: miniPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes miniPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(201, 151, 90, .5)
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(201, 151, 90, 0)
+      }
+    }
+
+    .cta-hint {
+      font-size: .68rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .cta-hint::before,
+    .cta-hint::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      width: 40px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 2.5rem;
+    }
+
+    .divider .line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider .label {
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* SERVICES */
+    #servicios {
+      padding: 5rem 2.5rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .services-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+    }
+
+    .services-header p {
+      margin-top: .7rem;
+      color: var(--muted);
+      font-size: .82rem;
+      letter-spacing: .05em;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+
+    .service-card:hover {
+      background: #1a1713;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .4s;
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-emoji {
+      font-size: 1.6rem;
+      margin-bottom: 1.4rem;
+      display: block;
+    }
+
+    .card-num {
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    .price-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: .8rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(201, 151, 90, 0.08);
+      gap: .8rem;
+    }
+
+    .price-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .price-name {
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .price-dur {
+      color: var(--muted);
+      font-size: .7rem;
+      opacity: .7;
+      white-space: nowrap;
+    }
+
+    .price-val {
+      color: var(--gold-soft);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* LUNA SECTION */
+    .luna-section {
+      text-align: center;
+      padding: 4rem 2rem 6rem;
+      border-top: 1px solid var(--border);
+      background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(201, 151, 90, 0.06) 0%, transparent 70%);
+    }
+
+    .luna-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    .luna-section h2 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .luna-section p {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.9;
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .luna-cta-big {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      transition: border-color .3s, background .3s;
+    }
+
+    .luna-cta-big:hover {
+      border-color: var(--gold);
+      background: rgba(201, 151, 90, 0.06);
+    }
+
+    .orb-sm {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, var(--gold-soft), var(--gold) 60%, #7a4e28);
+      animation: orbPulse 2.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes orbPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(201, 151, 90, .4), 0 0 20px rgba(201, 151, 90, .2)
+      }
+
+      50% {
+        box-shadow: 0 0 0 10px rgba(201, 151, 90, .04), 0 0 40px rgba(201, 151, 90, .35)
+      }
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 3.5rem;
+      padding: 0 2rem;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      max-width: 150px;
+    }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .step-num {
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .step-label {
+      font-size: .75rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: .68rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    footer span {
+      color: var(--gold);
+    }
+
+    /* FLOATING ORB */
+    .orb-float {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .orb-tag {
+      font-size: .58rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(12, 11, 9, .85);
+      border: 1px solid var(--border);
+      padding: .28rem .8rem;
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      animation: up .5s 1s forwards;
+    }
+
+    .orb-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      background: radial-gradient(circle at 35% 35%, var(--gold-soft), var(--gold) 55%, #7a4e28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      animation: orbPulse 2.5s ease-in-out infinite, up .5s .8s both;
+      transition: transform .2s;
+      position: relative;
+      box-shadow: 0 0 0 0 rgba(201, 151, 90, .5), 0 0 24px rgba(201, 151, 90, .25), inset 0 1px 0 rgba(255, 255, 255, .2);
+    }
+
+    .orb-btn:hover {
+      transform: scale(1.07);
+    }
+
+    .orb-btn:active {
+      transform: scale(.94);
+    }
+
+    .orb-btn::before,
+    .orb-btn::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 151, 90, .35);
+      animation: ring 2.5s ease-out infinite;
+    }
+
+    .orb-btn::after {
+      animation-delay: 1.25s;
+    }
+
+    @keyframes ring {
+      0% {
+        width: 64px;
+        height: 64px;
+        opacity: .5;
+        top: 0;
+        left: 0
+      }
+
+      100% {
+        width: 120px;
+        height: 120px;
+        opacity: 0;
+        top: -28px;
+        left: -28px
+      }
+    }
+
+    /* VOICE MODAL */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(6, 5, 4, .93);
+      backdrop-filter: blur(18px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+
+    .modal-bg.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      width: min(460px, 94vw);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2.2rem 2rem;
+      transform: translateY(28px) scale(.98);
+      transition: transform .35s;
+      position: relative;
+    }
+
+    .modal-bg.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: .9rem;
+      right: 1rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.3rem;
+      line-height: 1;
+      transition: color .2s;
+    }
+
+    .close-btn:hover {
+      color: var(--gold);
+    }
+
+    .luna-head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .luna-avatar-orb {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, var(--gold-soft), var(--gold) 55%, #7a4e28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 0 24px rgba(201, 151, 90, .3);
+      transition: box-shadow .3s;
+    }
+
+    .luna-avatar-orb.listening {
+      animation: glowListen 1s ease-in-out infinite;
+    }
+
+    .luna-avatar-orb.speaking {
+      animation: glowSpeak .7s ease-in-out infinite;
+    }
+
+    @keyframes glowListen {
+
+      0%,
+      100% {
+        box-shadow: 0 0 16px rgba(201, 151, 90, .3)
+      }
+
+      50% {
+        box-shadow: 0 0 48px rgba(201, 151, 90, .75)
+      }
+    }
+
+    @keyframes glowSpeak {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(201, 151, 90, .4);
+        transform: scale(1)
+      }
+
+      50% {
+        box-shadow: 0 0 64px rgba(201, 151, 90, .9);
+        transform: scale(1.04)
+      }
+    }
+
+    .luna-name-tag {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold-soft);
+    }
+
+    .luna-status {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      min-height: 1em;
+    }
+
+    .chat {
+      max-height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      margin-bottom: 1.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .bubble {
+      max-width: 88%;
+      padding: .75rem 1rem;
+      font-size: .8rem;
+      line-height: 1.7;
+      border-radius: 2px;
+      animation: up .3s ease;
+    }
+
+    .bubble-luna {
+      background: rgba(201, 151, 90, .08);
+      border-left: 2px solid var(--gold);
+      align-self: flex-start;
+    }
+
+    .bubble-user {
+      background: rgba(255, 255, 255, .04);
+      border-right: 2px solid rgba(255, 255, 255, .12);
+      align-self: flex-end;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .end-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 0 20px rgba(192, 57, 43, .3);
+      transition: transform .2s;
+    }
+
+    .end-btn:hover {
+      transform: scale(1.06);
+    }
+
+    .end-btn:active {
+      transform: scale(.93);
+    }
+
+    .mic-label {
+      text-align: center;
+      margin-top: .9rem;
+      font-size: .63rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    @keyframes up {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @media(max-width:680px) {
+      header {
+        padding: 1.2rem 1.5rem;
+      }
+
+      nav {
+        display: none;
+      }
+
+      #servicios {
+        padding: 3rem 1.5rem 4rem;
+      }
+
+      .luna-section {
+        padding: 3rem 1.5rem 5rem;
+      }
+
+      .steps {
+        gap: 2rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="logo">Bella <em>Studio</em></div>
-  <nav>
-    <a href="#servicios">Servicios</a>
-    <a href="#agendar">Agendar turno</a>
-  </nav>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Bella <em>Studio</em></div>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#agendar">Agendar turno</a>
+    </nav>
+  </header>
 
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-eyebrow">✦ Centro de Estética · Salta, Argentina</p>
-  <h1>Tu belleza,<br>realzada con <em>arte</em></h1>
-  <p class="hero-sub">Pestañas, uñas y cejas perfectas. Tratamientos exclusivos en un ambiente íntimo y profesional.</p>
-  <div class="hero-cta">
-    <button class="cta-main" onclick="openModal()">
-      <div class="cta-orb-mini">✦</div>
-      Hablar con Luna para agendar
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">✦ Centro de Estética · Salta, Argentina</p>
+    <h1>Tu belleza,<br>realzada con <em>arte</em></h1>
+    <p class="hero-sub">Pestañas, uñas y cejas perfectas. Tratamientos exclusivos en un ambiente íntimo y profesional.
+    </p>
+    <div class="hero-cta">
+      <button class="cta-main" onclick="openModal()">
+        <div class="cta-orb-mini">✦</div>
+        Hablar con Luna para agendar
+      </button>
+      <span class="cta-hint">o explorá nuestros servicios abajo</span>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="line"></div><span class="label">Nuestros Servicios</span>
+    <div class="line"></div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="servicios">
+    <div class="services-header">
+      <h2>¿Qué hacemos?</h2>
+      <p>Elegí tu servicio · Luna te ayuda a agendar en segundos</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <span class="card-emoji">👁</span>
+        <div class="card-num">Servicio 01</div>
+        <div class="card-title">Diseño de Pestañas</div>
+        <ul class="price-list">
+          <li><span class="price-name">Clásico</span><span class="price-dur">1h 30min</span><span
+              class="price-val">$8.000</span></li>
+          <li><span class="price-name">Volumen Ruso</span><span class="price-dur">2 horas</span><span
+              class="price-val">$10.000</span></li>
+          <li><span class="price-name">Mega Volumen</span><span class="price-dur">2h 30min</span><span
+              class="price-val">$12.000</span></li>
+          <li><span class="price-name">Relleno</span><span class="price-dur">1 hora</span><span
+              class="price-val">$5.000</span></li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="card-emoji">💅</span>
+        <div class="card-num">Servicio 02</div>
+        <div class="card-title">Manicura & Nail Art</div>
+        <ul class="price-list">
+          <li><span class="price-name">Semipermanente</span><span class="price-dur">1 hora</span><span
+              class="price-val">$5.000</span></li>
+          <li><span class="price-name">Esculpidas en Gel</span><span class="price-dur">1h 30min</span><span
+              class="price-val">$7.000</span></li>
+          <li><span class="price-name">Francesa Clásica</span><span class="price-dur">1 hora</span><span
+              class="price-val">$5.500</span></li>
+          <li><span class="price-name">Nail Art personalizado</span><span class="price-dur">—</span><span
+              class="price-val">+$1.500</span></li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="card-emoji">✨</span>
+        <div class="card-num">Servicio 03</div>
+        <div class="card-title">Diseño de Cejas</div>
+        <ul class="price-list">
+          <li><span class="price-name">Lifting + Laminado</span><span class="price-dur">45 min</span><span
+              class="price-val">$4.000</span></li>
+          <li><span class="price-name">Depilación + Diseño</span><span class="price-dur">30 min</span><span
+              class="price-val">$2.500</span></li>
+          <li><span class="price-name">Tinte con Henna</span><span class="price-dur">45 min</span><span
+              class="price-val">$3.500</span></li>
+          <li><span class="price-name">Pack Lifting + Tinte</span><span class="price-dur">1 hora</span><span
+              class="price-val">$6.500</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LUNA SECTION -->
+  <section class="luna-section" id="agendar">
+    <h2>Agendá con <em>Luna</em></h2>
+    <p>Luna es nuestra asistente de inteligencia artificial. Hablale por voz, ella te ayuda a elegir tu servicio y
+      reserva tu turno al instante.</p>
+    <button class="luna-cta-big" onclick="openModal()">
+      <div class="orb-sm"></div>
+      Comenzar a hablar con Luna
     </button>
-    <span class="cta-hint">o explorá nuestros servicios abajo</span>
-  </div>
-</section>
-
-<!-- DIVIDER -->
-<div class="divider"><div class="line"></div><span class="label">Nuestros Servicios</span><div class="line"></div></div>
-
-<!-- SERVICES -->
-<section id="servicios">
-  <div class="services-header">
-    <h2>¿Qué hacemos?</h2>
-    <p>Elegí tu servicio · Luna te ayuda a agendar en segundos</p>
-  </div>
-  <div class="services-grid">
-
-    <div class="service-card">
-      <span class="card-emoji">👁</span>
-      <div class="card-num">Servicio 01</div>
-      <div class="card-title">Diseño de Pestañas</div>
-      <ul class="price-list">
-        <li><span class="price-name">Clásico</span><span class="price-dur">1h 30min</span><span class="price-val">$8.000</span></li>
-        <li><span class="price-name">Volumen Ruso</span><span class="price-dur">2 horas</span><span class="price-val">$10.000</span></li>
-        <li><span class="price-name">Mega Volumen</span><span class="price-dur">2h 30min</span><span class="price-val">$12.000</span></li>
-        <li><span class="price-name">Relleno</span><span class="price-dur">1 hora</span><span class="price-val">$5.000</span></li>
-      </ul>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">🎤</div>
+        <div class="step-num">Paso 1</div>
+        <div class="step-label">Tocá el orb y hablá</div>
+      </div>
+      <div class="step">
+        <div class="step-icon">💬</div>
+        <div class="step-num">Paso 2</div>
+        <div class="step-label">Luna te pregunta qué servicio querés</div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📅</div>
+        <div class="step-num">Paso 3</div>
+        <div class="step-label">Elegís día y horario</div>
+      </div>
+      <div class="step">
+        <div class="step-icon">✅</div>
+        <div class="step-num">Paso 4</div>
+        <div class="step-label">Turno confirmado por WhatsApp</div>
+      </div>
     </div>
+  </section>
 
-    <div class="service-card">
-      <span class="card-emoji">💅</span>
-      <div class="card-num">Servicio 02</div>
-      <div class="card-title">Manicura & Nail Art</div>
-      <ul class="price-list">
-        <li><span class="price-name">Semipermanente</span><span class="price-dur">1 hora</span><span class="price-val">$5.000</span></li>
-        <li><span class="price-name">Esculpidas en Gel</span><span class="price-dur">1h 30min</span><span class="price-val">$7.000</span></li>
-        <li><span class="price-name">Francesa Clásica</span><span class="price-dur">1 hora</span><span class="price-val">$5.500</span></li>
-        <li><span class="price-name">Nail Art personalizado</span><span class="price-dur">—</span><span class="price-val">+$1.500</span></li>
-      </ul>
-    </div>
+  <footer>
+    <span>Bella Studio</span> · Centro de Estética Premium · Salta, Argentina<br>
+    <span style="opacity:.5;display:block;margin-top:.4rem">Lunes a Sábado · 9:00 a 19:00 hs</span>
+  </footer>
 
-    <div class="service-card">
-      <span class="card-emoji">✨</span>
-      <div class="card-num">Servicio 03</div>
-      <div class="card-title">Diseño de Cejas</div>
-      <ul class="price-list">
-        <li><span class="price-name">Lifting + Laminado</span><span class="price-dur">45 min</span><span class="price-val">$4.000</span></li>
-        <li><span class="price-name">Depilación + Diseño</span><span class="price-dur">30 min</span><span class="price-val">$2.500</span></li>
-        <li><span class="price-name">Tinte con Henna</span><span class="price-dur">45 min</span><span class="price-val">$3.500</span></li>
-        <li><span class="price-name">Pack Lifting + Tinte</span><span class="price-dur">1 hora</span><span class="price-val">$6.500</span></li>
-      </ul>
-    </div>
-
+  <!-- FLOATING ORB -->
+  <div class="orb-float">
+    <span class="orb-tag">Hablar con Luna</span>
+    <button class="orb-btn" onclick="openModal()">✦</button>
   </div>
-</section>
 
-<!-- LUNA SECTION -->
-<section class="luna-section" id="agendar">
-  <h2>Agendá con <em>Luna</em></h2>
-  <p>Luna es nuestra asistente de inteligencia artificial. Hablale por voz, ella te ayuda a elegir tu servicio y reserva tu turno al instante.</p>
-  <button class="luna-cta-big" onclick="openModal()">
-    <div class="orb-sm"></div>
-    Comenzar a hablar con Luna
-  </button>
-  <div class="steps">
-    <div class="step"><div class="step-icon">🎤</div><div class="step-num">Paso 1</div><div class="step-label">Tocá el orb y hablá</div></div>
-    <div class="step"><div class="step-icon">💬</div><div class="step-num">Paso 2</div><div class="step-label">Luna te pregunta qué servicio querés</div></div>
-    <div class="step"><div class="step-icon">📅</div><div class="step-num">Paso 3</div><div class="step-label">Elegís día y horario</div></div>
-    <div class="step"><div class="step-icon">✅</div><div class="step-num">Paso 4</div><div class="step-label">Turno confirmado por WhatsApp</div></div>
-  </div>
-</section>
-
-<footer>
-  <span>Bella Studio</span> · Centro de Estética Premium · Salta, Argentina<br>
-  <span style="opacity:.5;display:block;margin-top:.4rem">Lunes a Sábado · 9:00 a 19:00 hs</span>
-</footer>
-
-<!-- FLOATING ORB -->
-<div class="orb-float">
-  <span class="orb-tag">Hablar con Luna</span>
-  <button class="orb-btn" onclick="openModal()">✦</button>
-</div>
-
-<!-- VOICE MODAL -->
-<div class="modal-bg" id="modalBg" onclick="bgClick(event)">
-  <div class="modal">
-    <button class="close-btn" onclick="closeModal()">×</button>
-    <div class="luna-head">
-      <div class="luna-avatar-orb" id="lunaOrb">✦</div>
-      <div class="luna-name-tag">Luna</div>
-      <div class="luna-status" id="lunaStatus">Conectando…</div>
+  <!-- VOICE MODAL -->
+  <div class="modal-bg" id="modalBg" onclick="bgClick(event)">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <div class="luna-head">
+        <div class="luna-avatar-orb" id="lunaOrb">✦</div>
+        <div class="luna-name-tag">Luna</div>
+        <div class="luna-status" id="lunaStatus">Conectando…</div>
+      </div>
+      <div class="chat" id="chat"></div>
+      <div class="controls">
+        <button class="end-btn" onclick="closeModal()" title="Terminar llamada">📵</button>
+      </div>
+      <p class="mic-label" id="micLabel">Hablá · Luna te escucha en tiempo real</p>
     </div>
-    <div class="chat" id="chat"></div>
-    <div class="controls">
-      <button class="end-btn" onclick="closeModal()" title="Terminar llamada">📵</button>
-    </div>
-    <p class="mic-label" id="micLabel">Hablá · Luna te escucha en tiempo real</p>
   </div>
-</div>
 
-<script>
-const SYSTEM = `
+  <script>
+    const SYSTEM = `
 Sos Luna, la asistente virtual de Bella Studio, un centro de estética premium en Salta, Argentina.
 Sos cálida, simpática, profesional y hablás en español argentino (vos, che, dale).
 
@@ -323,205 +1000,220 @@ REGLAS IMPORTANTES:
 - Si ya tenés todos los datos, confirmá el turno y cerrá con entusiasmo.
 `.trim();
 
-const apiKey     = 'AIzaSyBxVnTh61yWcVM3ccKgtoXp2GYmhSrEUC4';
-let ws           = null;
-let audioCtxIn   = null;   // micrófono → 16 kHz
-let audioCtxOut  = null;   // reproducción → 24 kHz
-let micStream    = null;
-let scriptProc   = null;
-let nextPlayTime = 0;
-let sessionActive = false;
+    const apiKey = 'AIzaSyDqHS4BU5ISmDY2r9HaOU06osxY5-D0R0U';
+    let ws = null;
+    let audioCtxIn = null;   // micrófono → 16 kHz
+    let audioCtxOut = null;   // reproducción → 24 kHz
+    let micStream = null;
+    let scriptProc = null;
+    let nextPlayTime = 0;
+    let sessionActive = false;
 
-// ── MODAL ──────────────────────────────────────────────────────────
-function openModal() {
-  document.getElementById('modalBg').classList.add('open');
-  if (!sessionActive) startSession();
-}
-function closeModal() {
-  document.getElementById('modalBg').classList.remove('open');
-  stopSession();
-}
-function bgClick(e) {
-  if (e.target === document.getElementById('modalBg')) closeModal();
-}
-
-// ── GEMINI LIVE SESSION ────────────────────────────────────────────
-function startSession() {
-  if (ws) return;
-  setStatus('Conectando…'); setState('idle');
-
-  const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
-  ws = new WebSocket(url);
-
-  ws.onopen = () => {
-    ws.send(JSON.stringify({
-      config: {
-        model: 'models/gemini-3.1-flash-live-preview',
-        responseModalities: ['AUDIO'],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Aoede' }
-          }
-        },
-        systemInstruction: { parts: [{ text: SYSTEM }] }
-      }
-    }));
-    setStatus('Conectando…');
-  };
-
-  ws.onmessage = async (evt) => {
-    const raw = evt.data instanceof Blob ? await evt.data.text() : evt.data;
-    let msg;
-    try { msg = JSON.parse(raw); } catch { return; }
-
-    // Servidor listo → arrancamos micrófono y disparamos saludo
-    if ('setupComplete' in msg) {
-      sessionActive = true;
-      await startMic();
-      ws.send(JSON.stringify({ realtimeInput: { text: 'Hola' } }));
-      return;
+    // ── MODAL ──────────────────────────────────────────────────────────
+    function openModal() {
+      document.getElementById('modalBg').classList.add('open');
+      if (!sessionActive) startSession();
     }
-
-    // Audio de respuesta
-    if (msg.serverContent?.modelTurn?.parts) {
-      for (const part of msg.serverContent.modelTurn.parts) {
-        if (part.inlineData?.data) {
-          setState('speaking'); setStatus('Hablando…');
-          playPcm16(part.inlineData.data);
-        }
-        if (part.text) addBubble('luna', part.text);
-      }
-    }
-
-    // Transcripciones
-    if (msg.serverContent?.outputTranscription?.text && msg.serverContent.outputTranscription.finished) {
-      addBubble('luna', msg.serverContent.outputTranscription.text);
-    }
-    if (msg.serverContent?.inputTranscription?.text && msg.serverContent.inputTranscription.finished) {
-      addBubble('user', msg.serverContent.inputTranscription.text);
-    }
-
-    // Turno completado → volver a escuchar
-    if (msg.serverContent?.turnComplete) {
-      setState('listening'); setStatus('Te escucho…');
-    }
-
-    // Interrupción del usuario → limpiar cola de audio
-    if (msg.serverContent?.interrupted) {
-      nextPlayTime = 0;
-      setState('listening'); setStatus('Te escucho…');
-    }
-
-    // Error de la API
-    if (msg.error) {
-      setStatus('Error: ' + (msg.error.message || 'desconocido'));
+    function closeModal() {
+      document.getElementById('modalBg').classList.remove('open');
       stopSession();
     }
-  };
+    function bgClick(e) {
+      if (e.target === document.getElementById('modalBg')) closeModal();
+    }
 
-  ws.onerror = () => setStatus('Error de conexión');
-  ws.onclose = () => { ws = null; sessionActive = false; };
-}
+    // ── GEMINI LIVE SESSION ────────────────────────────────────────────
+    function startSession() {
+      if (ws) return;
+      setStatus('Conectando…'); setState('idle');
 
-// ── MICRÓFONO ──────────────────────────────────────────────────────
-async function startMic() {
-  try {
-    micStream = await navigator.mediaDevices.getUserMedia({
-      audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 }
-    });
+      const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
+      ws = new WebSocket(url);
 
-    audioCtxIn  = new AudioContext({ sampleRate: 16000 });
-    audioCtxOut = new AudioContext({ sampleRate: 24000 });
+      ws.onopen = () => {
+        console.log('WS abierto, enviando config…');
+        ws.send(JSON.stringify({
+          setup: {
+            model: 'models/gemini-3.1-flash-live-preview',
+            generation_config: {
+              response_modalities: ['AUDIO'],
+              speech_config: {
+                voice_config: {
+                  prebuilt_voice_config: { voice_name: 'Aoede' }
+                }
+              }
+            },
+            system_instruction: { parts: [{ text: SYSTEM }] }
+          }
+        }));
+        setStatus('Esperando sesión…');
+      };
 
-    // Reanudar si el navegador los suspendió (política autoplay)
-    if (audioCtxIn.state  === 'suspended') await audioCtxIn.resume();
-    if (audioCtxOut.state === 'suspended') await audioCtxOut.resume();
+      ws.onmessage = async (evt) => {
+        const raw = evt.data instanceof Blob ? await evt.data.text() : evt.data;
+        let msg;
+        try { msg = JSON.parse(raw); } catch { return; }
 
-    nextPlayTime = 0;
+        // Log de todos los mensajes del servidor para debug
+        console.log('MSG servidor:', JSON.stringify(msg).slice(0, 200));
 
-    const src = audioCtxIn.createMediaStreamSource(micStream);
-    scriptProc = audioCtxIn.createScriptProcessor(4096, 1, 1);
-
-    scriptProc.onaudioprocess = (e) => {
-      if (!ws || ws.readyState !== WebSocket.OPEN) return;
-      const f32 = e.inputBuffer.getChannelData(0);
-      const i16 = new Int16Array(f32.length);
-      for (let i = 0; i < f32.length; i++)
-        i16[i] = Math.max(-32768, Math.min(32767, f32[i] * 32768 | 0));
-      ws.send(JSON.stringify({
-        realtimeInput: {
-          audio: { data: toB64(i16.buffer), mimeType: 'audio/pcm;rate=16000' }
+        // Servidor listo → arrancamos micrófono y disparamos saludo
+        if ('setupComplete' in msg) {
+          console.log('setupComplete recibido, iniciando mic…');
+          sessionActive = true;
+          await startMic();
+          ws.send(JSON.stringify({ realtimeInput: { text: 'Hola' } }));
+          return;
         }
-      }));
-    };
 
-    src.connect(scriptProc);
-    scriptProc.connect(audioCtxIn.destination);
-    setState('listening'); setStatus('Te escucho…');
+        // Audio de respuesta
+        if (msg.serverContent?.modelTurn?.parts) {
+          for (const part of msg.serverContent.modelTurn.parts) {
+            if (part.inlineData?.data) {
+              setState('speaking'); setStatus('Hablando…');
+              playPcm16(part.inlineData.data);
+            }
+            if (part.text) addBubble('luna', part.text);
+          }
+        }
 
-  } catch (e) {
-    setStatus(e.name === 'NotAllowedError'
-      ? 'Permiso de micrófono denegado'
-      : 'No se pudo abrir el micrófono');
-  }
-}
+        // Transcripciones
+        if (msg.serverContent?.outputTranscription?.text && msg.serverContent.outputTranscription.finished) {
+          addBubble('luna', msg.serverContent.outputTranscription.text);
+        }
+        if (msg.serverContent?.inputTranscription?.text && msg.serverContent.inputTranscription.finished) {
+          addBubble('user', msg.serverContent.inputTranscription.text);
+        }
 
-// ── AUDIO UTILS ────────────────────────────────────────────────────
-function toB64(buffer) {
-  const bytes = new Uint8Array(buffer);
-  let s = '';
-  for (let i = 0; i < bytes.length; i += 8192)
-    s += String.fromCharCode(...bytes.subarray(i, i + 8192));
-  return btoa(s);
-}
+        // Turno completado → volver a escuchar
+        if (msg.serverContent?.turnComplete) {
+          setState('listening'); setStatus('Te escucho…');
+        }
 
-function playPcm16(b64) {
-  if (!audioCtxOut) return;
-  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-  const i16   = new Int16Array(bytes.buffer);
-  const f32   = Float32Array.from(i16, s => s / 32768);
+        // Interrupción del usuario → limpiar cola de audio
+        if (msg.serverContent?.interrupted) {
+          nextPlayTime = 0;
+          setState('listening'); setStatus('Te escucho…');
+        }
 
-  const buf  = audioCtxOut.createBuffer(1, f32.length, 24000);
-  buf.getChannelData(0).set(f32);
+        // Error de la API
+        if (msg.error) {
+          setStatus('Error: ' + (msg.error.message || 'desconocido'));
+          stopSession();
+        }
+      };
 
-  const node = audioCtxOut.createBufferSource();
-  node.buffer = buf;
-  node.connect(audioCtxOut.destination);
+      ws.onerror = (e) => {
+        console.error('WS error:', e);
+        setStatus('Error de conexión WebSocket');
+      };
+      ws.onclose = (e) => {
+        console.warn('WS closed:', e.code, e.reason);
+        setStatus('Sesión cerrada (' + e.code + (e.reason ? ': ' + e.reason : '') + ')');
+        ws = null; sessionActive = false;
+      };
+    }
 
-  const when = Math.max(nextPlayTime, audioCtxOut.currentTime + 0.04);
-  node.start(when);
-  nextPlayTime = when + buf.duration;
-}
+    // ── MICRÓFONO ──────────────────────────────────────────────────────
+    async function startMic() {
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 }
+        });
 
-// ── CLEANUP ────────────────────────────────────────────────────────
-function stopSession() {
-  try { if (scriptProc) scriptProc.disconnect(); } catch {}
-  try { if (audioCtxIn)  audioCtxIn.close();  } catch {}
-  try { if (audioCtxOut) audioCtxOut.close(); } catch {}
-  if (micStream) micStream.getTracks().forEach(t => t.stop());
-  if (ws) ws.close();
-  scriptProc = audioCtxIn = audioCtxOut = micStream = ws = null;
-  sessionActive = false;
-  nextPlayTime  = 0;
-  setState('idle'); setStatus('Conectando…');
-  document.getElementById('chat').innerHTML = '';
-}
+        audioCtxIn = new AudioContext({ sampleRate: 16000 });
+        audioCtxOut = new AudioContext({ sampleRate: 24000 });
 
-// ── UI ─────────────────────────────────────────────────────────────
-function addBubble(who, text) {
-  const c = document.getElementById('chat');
-  const d = document.createElement('div');
-  d.className = 'bubble bubble-' + who;
-  d.textContent = text;
-  c.appendChild(d);
-  c.scrollTop = c.scrollHeight;
-}
-function setStatus(t) { document.getElementById('lunaStatus').textContent = t; }
-function setState(s) {
-  const o = document.getElementById('lunaOrb');
-  o.className = 'luna-avatar-orb';
-  if (s !== 'idle') o.classList.add(s);
-}
-</script>
+        // Reanudar si el navegador los suspendió (política autoplay)
+        if (audioCtxIn.state === 'suspended') await audioCtxIn.resume();
+        if (audioCtxOut.state === 'suspended') await audioCtxOut.resume();
+
+        nextPlayTime = 0;
+
+        const src = audioCtxIn.createMediaStreamSource(micStream);
+        scriptProc = audioCtxIn.createScriptProcessor(4096, 1, 1);
+
+        scriptProc.onaudioprocess = (e) => {
+          if (!ws || ws.readyState !== WebSocket.OPEN) return;
+          const f32 = e.inputBuffer.getChannelData(0);
+          const i16 = new Int16Array(f32.length);
+          for (let i = 0; i < f32.length; i++)
+            i16[i] = Math.max(-32768, Math.min(32767, f32[i] * 32768 | 0));
+          ws.send(JSON.stringify({
+            realtimeInput: {
+              audio: { data: toB64(i16.buffer), mimeType: 'audio/pcm;rate=16000' }
+            }
+          }));
+        };
+
+        src.connect(scriptProc);
+        scriptProc.connect(audioCtxIn.destination);
+        setState('listening'); setStatus('Te escucho…');
+
+      } catch (e) {
+        setStatus(e.name === 'NotAllowedError'
+          ? 'Permiso de micrófono denegado'
+          : 'No se pudo abrir el micrófono');
+      }
+    }
+
+    // ── AUDIO UTILS ────────────────────────────────────────────────────
+    function toB64(buffer) {
+      const bytes = new Uint8Array(buffer);
+      let s = '';
+      for (let i = 0; i < bytes.length; i += 8192)
+        s += String.fromCharCode(...bytes.subarray(i, i + 8192));
+      return btoa(s);
+    }
+
+    function playPcm16(b64) {
+      if (!audioCtxOut) return;
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const i16 = new Int16Array(bytes.buffer);
+      const f32 = Float32Array.from(i16, s => s / 32768);
+
+      const buf = audioCtxOut.createBuffer(1, f32.length, 24000);
+      buf.getChannelData(0).set(f32);
+
+      const node = audioCtxOut.createBufferSource();
+      node.buffer = buf;
+      node.connect(audioCtxOut.destination);
+
+      const when = Math.max(nextPlayTime, audioCtxOut.currentTime + 0.04);
+      node.start(when);
+      nextPlayTime = when + buf.duration;
+    }
+
+    // ── CLEANUP ────────────────────────────────────────────────────────
+    function stopSession() {
+      try { if (scriptProc) scriptProc.disconnect(); } catch { }
+      try { if (audioCtxIn) audioCtxIn.close(); } catch { }
+      try { if (audioCtxOut) audioCtxOut.close(); } catch { }
+      if (micStream) micStream.getTracks().forEach(t => t.stop());
+      if (ws) ws.close();
+      scriptProc = audioCtxIn = audioCtxOut = micStream = ws = null;
+      sessionActive = false;
+      nextPlayTime = 0;
+      setState('idle'); setStatus('Conectando…');
+      document.getElementById('chat').innerHTML = '';
+    }
+
+    // ── UI ─────────────────────────────────────────────────────────────
+    function addBubble(who, text) {
+      const c = document.getElementById('chat');
+      const d = document.createElement('div');
+      d.className = 'bubble bubble-' + who;
+      d.textContent = text;
+      c.appendChild(d);
+      c.scrollTop = c.scrollHeight;
+    }
+    function setStatus(t) { document.getElementById('lunaStatus').textContent = t; }
+    function setState(s) {
+      const o = document.getElementById('lunaOrb');
+      o.className = 'luna-avatar-orb';
+      if (s !== 'idle') o.classList.add(s);
+    }
+  </script>
 </body>
+
 </html>

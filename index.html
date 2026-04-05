@@ -124,25 +124,6 @@ footer span { color:var(--gold); }
 .orb-btn::after { animation-delay:1.25s; }
 @keyframes ring { 0%{width:64px;height:64px;opacity:.5;top:0;left:0} 100%{width:120px;height:120px;opacity:0;top:-28px;left:-28px} }
 
-/* GEAR */
-.gear { position:fixed; bottom:1.8rem; left:1.8rem; z-index:200; width:34px; height:34px; border-radius:50%; cursor:pointer; background:rgba(20,18,16,.85); border:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); transition:color .2s, border-color .2s; }
-.gear:hover { color:var(--gold); border-color:var(--gold); }
-
-/* SETUP OVERLAY */
-.setup-overlay { position:fixed; inset:0; z-index:400; background:rgba(8,7,5,.96); backdrop-filter:blur(20px); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1.2rem; padding:2rem; }
-.setup-overlay.hidden { display:none; }
-.setup-box { width:min(400px,92vw); background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:2.5rem; }
-.setup-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:400; margin-bottom:.5rem; color:var(--gold-soft); }
-.setup-box p { font-size:.8rem; color:var(--muted); line-height:1.8; margin-bottom:1.8rem; }
-.field { position:relative; margin-bottom:1.2rem; }
-.field label { position:absolute; top:-.5rem; left:.8rem; font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); background:var(--surface); padding:0 .35rem; }
-.field input { width:100%; background:rgba(255,255,255,.03); border:1px solid var(--border); border-radius:3px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:.83rem; padding:.85rem 1rem; outline:none; transition:border-color .3s; }
-.field input:focus { border-color:var(--gold); }
-.field input::placeholder { color:var(--muted); }
-.btn-activate { width:100%; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#1a0d03; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; padding:.95rem; border-radius:3px; transition:opacity .3s; }
-.btn-activate:hover { opacity:.88; }
-.setup-note { font-size:.68rem; color:var(--muted); text-align:center; max-width:400px; line-height:1.7; }
-
 /* VOICE MODAL */
 .modal-bg { position:fixed; inset:0; z-index:300; background:rgba(6,5,4,.93); backdrop-filter:blur(18px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; }
 .modal-bg.open { opacity:1; pointer-events:all; }
@@ -162,13 +143,10 @@ footer span { color:var(--gold); }
 .bubble { max-width:88%; padding:.75rem 1rem; font-size:.8rem; line-height:1.7; border-radius:2px; animation:up .3s ease; }
 .bubble-luna { background:rgba(201,151,90,.08); border-left:2px solid var(--gold); align-self:flex-start; }
 .bubble-user { background:rgba(255,255,255,.04); border-right:2px solid rgba(255,255,255,.12); align-self:flex-end; color:var(--muted); text-align:right; }
-.controls { display:flex; align-items:center; justify-content:center; gap:.9rem; }
-.stop-btn { width:38px; height:38px; border-radius:50%; background:transparent; border:1px solid var(--border); color:var(--muted); cursor:pointer; font-size:.95rem; transition:border-color .2s,color .2s; }
-.stop-btn:hover { border-color:var(--gold); color:var(--gold); }
-.mic-btn { width:58px; height:58px; border-radius:50%; cursor:pointer; border:none; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); display:flex; align-items:center; justify-content:center; font-size:1.4rem; box-shadow:0 0 20px rgba(201,151,90,.3); transition:transform .2s,opacity .2s; }
-.mic-btn:hover { transform:scale(1.06); }
-.mic-btn.on { background:linear-gradient(135deg,#d45555,#e88888); animation:micGlow .8s ease-in-out infinite; }
-@keyframes micGlow { 0%,100%{box-shadow:0 0 14px rgba(212,85,85,.4)} 50%{box-shadow:0 0 38px rgba(212,85,85,.85)} }
+.controls { display:flex; align-items:center; justify-content:center; }
+.end-btn { width:58px; height:58px; border-radius:50%; cursor:pointer; border:none; background:linear-gradient(135deg,#c0392b,#e74c3c); display:flex; align-items:center; justify-content:center; font-size:1.4rem; box-shadow:0 0 20px rgba(192,57,43,.3); transition:transform .2s; }
+.end-btn:hover { transform:scale(1.06); }
+.end-btn:active { transform:scale(.93); }
 .mic-label { text-align:center; margin-top:.9rem; font-size:.63rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); }
 
 @keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -183,20 +161,6 @@ footer span { color:var(--gold); }
 </style>
 </head>
 <body>
-
-<!-- SETUP -->
-<div class="setup-overlay" id="setup">
-  <div class="setup-box">
-    <h3>✦ Activar Luna</h3>
-    <p>Ingresá tu API Key de Anthropic para activar la asistente virtual. Se guarda solo en este dispositivo y no sale a ningún servidor externo.</p>
-    <div class="field">
-      <label>Anthropic API Key</label>
-      <input type="password" id="keyInput" placeholder="sk-ant-api03-..." />
-    </div>
-    <button class="btn-activate" onclick="saveKey()">Activar Luna ✦</button>
-  </div>
-  <p class="setup-note">🔒 Solo se comunica con api.anthropic.com · No se almacena en ningún servidor</p>
-</div>
 
 <!-- HEADER -->
 <header>
@@ -298,9 +262,6 @@ footer span { color:var(--gold); }
   <button class="orb-btn" onclick="openModal()">✦</button>
 </div>
 
-<!-- GEAR -->
-<button class="gear" onclick="showSetup()" title="Configurar API Key">⚙</button>
-
 <!-- VOICE MODAL -->
 <div class="modal-bg" id="modalBg" onclick="bgClick(event)">
   <div class="modal">
@@ -308,14 +269,13 @@ footer span { color:var(--gold); }
     <div class="luna-head">
       <div class="luna-avatar-orb" id="lunaOrb">✦</div>
       <div class="luna-name-tag">Luna</div>
-      <div class="luna-status" id="lunaStatus">Iniciando…</div>
+      <div class="luna-status" id="lunaStatus">Conectando…</div>
     </div>
     <div class="chat" id="chat"></div>
     <div class="controls">
-      <button class="stop-btn" onclick="stopAll()" title="Detener">⏹</button>
-      <button class="mic-btn" id="micBtn" onclick="toggleMic()">🎤</button>
+      <button class="end-btn" onclick="closeModal()" title="Terminar llamada">📵</button>
     </div>
-    <p class="mic-label" id="micLabel">Tocá el micrófono y hablá</p>
+    <p class="mic-label" id="micLabel">Hablá · Luna te escucha en tiempo real</p>
   </div>
 </div>
 
@@ -349,7 +309,7 @@ SEÑA: Se pide el 30% del valor del servicio para confirmar el turno.
 RECORDATORIO: Una vez confirmado el turno, le llega un mensaje por WhatsApp.
 
 FLUJO DE AGENDADO:
-1. Saludar calurosamente y presentarte
+1. Saludar calurosamente y presentarte como Luna
 2. Preguntar qué servicio le interesa
 3. Si pregunta precios o diferencias, explicar brevemente
 4. Preguntar qué día y horario prefiere
@@ -358,135 +318,201 @@ FLUJO DE AGENDADO:
 
 REGLAS IMPORTANTES:
 - Respuestas CORTAS: máximo 2 o 3 oraciones por mensaje.
-- No uses asteriscos, guiones ni listas en tus respuestas, hablá en texto corrido.
+- Hablá en texto corrido, sin listas, asteriscos ni símbolos especiales.
 - Sé natural y conversacional, no robótica.
 - Si ya tenés todos los datos, confirmá el turno y cerrá con entusiasmo.
 `.trim();
 
-let apiKey = localStorage.getItem('bs_key') || '';
-let messages = [];
-let recognition = null;
-let isRecording = false;
-let isSpeaking = false;
-let started = false;
+const apiKey     = 'AIzaSyBxVnTh61yWcVM3ccKgtoXp2GYmhSrEUC4';
+let ws           = null;
+let audioCtxIn   = null;   // micrófono → 16 kHz
+let audioCtxOut  = null;   // reproducción → 24 kHz
+let micStream    = null;
+let scriptProc   = null;
+let nextPlayTime = 0;
+let sessionActive = false;
 
-// KEY
-function saveKey() {
-  const v = document.getElementById('keyInput').value.trim();
-  if (!v.startsWith('sk-ant')) { alert('API Key inválida. Debe empezar con sk-ant...'); return; }
-  apiKey = v;
-  localStorage.setItem('bs_key', v);
-  document.getElementById('setup').classList.add('hidden');
-}
-function showSetup() {
-  document.getElementById('keyInput').value = apiKey;
-  document.getElementById('setup').classList.remove('hidden');
-}
-window.addEventListener('load', () => { if (apiKey) document.getElementById('setup').classList.add('hidden'); });
-
-// MODAL
+// ── MODAL ──────────────────────────────────────────────────────────
 function openModal() {
-  if (!apiKey) { showSetup(); return; }
   document.getElementById('modalBg').classList.add('open');
-  if (!started) { started = true; setTimeout(kickoff, 450); }
+  if (!sessionActive) startSession();
 }
-function closeModal() { document.getElementById('modalBg').classList.remove('open'); stopAll(); }
-function bgClick(e) { if (e.target === document.getElementById('modalBg')) closeModal(); }
-
-// KICKOFF
-async function kickoff() {
-  const reply = await askClaude('Hola, llegué a Bella Studio.');
-  if (reply) { addBubble('luna', reply); speak(reply); }
+function closeModal() {
+  document.getElementById('modalBg').classList.remove('open');
+  stopSession();
+}
+function bgClick(e) {
+  if (e.target === document.getElementById('modalBg')) closeModal();
 }
 
-// CLAUDE
-async function askClaude(userText) {
-  messages.push({ role:'user', content:userText });
-  setStatus('Pensando…'); setState('idle');
+// ── GEMINI LIVE SESSION ────────────────────────────────────────────
+function startSession() {
+  if (ws) return;
+  setStatus('Conectando…'); setState('idle');
+
+  const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${apiKey}`;
+  ws = new WebSocket(url);
+
+  ws.onopen = () => {
+    ws.send(JSON.stringify({
+      setup: {
+        model: 'models/gemini-2.0-flash-live-001',
+        generation_config: {
+          response_modalities: ['AUDIO'],
+          speech_config: {
+            voice_config: {
+              prebuilt_voice_config: { voice_name: 'Aoede' }
+            }
+          }
+        },
+        system_instruction: { parts: [{ text: SYSTEM }] }
+      }
+    }));
+  };
+
+  ws.onmessage = async (evt) => {
+    const raw = evt.data instanceof Blob ? await evt.data.text() : evt.data;
+    let msg;
+    try { msg = JSON.parse(raw); } catch { return; }
+
+    // Sesión lista → abrir micrófono y disparar saludo
+    if (msg.setupComplete) {
+      sessionActive = true;
+      await startMic();
+      ws.send(JSON.stringify({
+        client_content: {
+          turns: [{ role: 'user', parts: [{ text: 'Hola' }] }],
+          turn_complete: true
+        }
+      }));
+    }
+
+    // Audio de respuesta
+    if (msg.serverContent?.modelTurn?.parts) {
+      for (const part of msg.serverContent.modelTurn.parts) {
+        if (part.inlineData?.data) {
+          setState('speaking'); setStatus('Hablando…');
+          playPcm16(part.inlineData.data);
+        }
+        // Transcripción de texto (si la API la incluye)
+        if (part.text) addBubble('luna', part.text);
+      }
+    }
+
+    // Turno completado → volver a escuchar
+    if (msg.serverContent?.turnComplete) {
+      setState('listening'); setStatus('Te escucho…');
+    }
+
+    // Interrupción del usuario → limpiar cola de audio
+    if (msg.serverContent?.interrupted) {
+      nextPlayTime = 0;
+      setState('listening'); setStatus('Te escucho…');
+    }
+
+    // Error de la API
+    if (msg.error) {
+      setStatus('Error: ' + (msg.error.message || 'desconocido'));
+      stopSession();
+    }
+  };
+
+  ws.onerror = () => setStatus('Error de conexión');
+  ws.onclose = () => { ws = null; sessionActive = false; };
+}
+
+// ── MICRÓFONO ──────────────────────────────────────────────────────
+async function startMic() {
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'x-api-key':apiKey,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
-      },
-      body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:200, system:SYSTEM, messages })
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 }
     });
-    const data = await res.json();
-    if (data.error) { setStatus('Error: ' + data.error.message); return null; }
-    const reply = data.content[0].text;
-    messages.push({ role:'assistant', content:reply });
-    return reply;
-  } catch(e) { setStatus('Error de conexión'); return null; }
+
+    audioCtxIn  = new AudioContext({ sampleRate: 16000 });
+    audioCtxOut = new AudioContext({ sampleRate: 24000 });
+
+    // Reanudar si el navegador los suspendió (política autoplay)
+    if (audioCtxIn.state  === 'suspended') await audioCtxIn.resume();
+    if (audioCtxOut.state === 'suspended') await audioCtxOut.resume();
+
+    nextPlayTime = 0;
+
+    const src = audioCtxIn.createMediaStreamSource(micStream);
+    scriptProc = audioCtxIn.createScriptProcessor(4096, 1, 1);
+
+    scriptProc.onaudioprocess = (e) => {
+      if (!ws || ws.readyState !== WebSocket.OPEN) return;
+      const f32 = e.inputBuffer.getChannelData(0);
+      const i16 = new Int16Array(f32.length);
+      for (let i = 0; i < f32.length; i++)
+        i16[i] = Math.max(-32768, Math.min(32767, f32[i] * 32768 | 0));
+      ws.send(JSON.stringify({
+        realtime_input: {
+          media_chunks: [{ data: toB64(i16.buffer), mime_type: 'audio/pcm;rate=16000' }]
+        }
+      }));
+    };
+
+    src.connect(scriptProc);
+    scriptProc.connect(audioCtxIn.destination);
+    setState('listening'); setStatus('Te escucho…');
+
+  } catch (e) {
+    setStatus(e.name === 'NotAllowedError'
+      ? 'Permiso de micrófono denegado'
+      : 'No se pudo abrir el micrófono');
+  }
 }
 
-// MIC
-function toggleMic() {
-  if (isSpeaking) stopAll();
-  if (isRecording) { stopRec(); return; }
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { alert('Usá Chrome en Android para reconocimiento de voz.'); return; }
-  recognition = new SR();
-  recognition.lang = 'es-AR'; recognition.continuous = false; recognition.interimResults = false;
-  recognition.onstart = () => {
-    isRecording = true;
-    document.getElementById('micBtn').classList.add('on');
-    document.getElementById('micLabel').textContent = 'Escuchando… hablá ahora';
-    setStatus('Escuchando…'); setState('listening');
-  };
-  recognition.onresult = async (e) => {
-    const text = e.results[0][0].transcript;
-    addBubble('user', text); stopRec();
-    const reply = await askClaude(text);
-    if (reply) { addBubble('luna', reply); speak(reply); }
-  };
-  recognition.onerror = (e) => {
-    stopRec();
-    setStatus(e.error === 'not-allowed' ? 'Permiso de micrófono denegado' : 'No te escuché, intentá de nuevo');
-  };
-  recognition.onend = () => {
-    isRecording = false;
-    document.getElementById('micBtn').classList.remove('on');
-    document.getElementById('micLabel').textContent = 'Tocá el micrófono y hablá';
-    if (!isSpeaking) { setStatus('Tu turno'); setState('idle'); }
-  };
-  recognition.start();
-}
-function stopRec() {
-  try { if (recognition) recognition.stop(); } catch(e){}
-  isRecording = false;
-  document.getElementById('micBtn').classList.remove('on');
+// ── AUDIO UTILS ────────────────────────────────────────────────────
+function toB64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let s = '';
+  for (let i = 0; i < bytes.length; i += 8192)
+    s += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  return btoa(s);
 }
 
-// SPEAK
-function speak(text) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'es-AR'; u.rate = 0.93; u.pitch = 1.08;
-  const voices = speechSynthesis.getVoices();
-  const best = voices.find(v => v.lang.startsWith('es') && /paulina|lucia|lupe|monica|marisol|paloma|female|mujer/i.test(v.name)) || voices.find(v => v.lang.startsWith('es'));
-  if (best) u.voice = best;
-  u.onstart = () => { isSpeaking=true; setStatus('Hablando…'); setState('speaking'); };
-  u.onend   = () => { isSpeaking=false; setStatus('Tu turno'); setState('idle'); };
-  speechSynthesis.speak(u);
-}
-function stopAll() {
-  stopRec();
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
-  isSpeaking=false; setState('idle'); setStatus('Tocá el micrófono para hablar');
-}
-if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+function playPcm16(b64) {
+  if (!audioCtxOut) return;
+  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const i16   = new Int16Array(bytes.buffer);
+  const f32   = Float32Array.from(i16, s => s / 32768);
 
-// UI
+  const buf  = audioCtxOut.createBuffer(1, f32.length, 24000);
+  buf.getChannelData(0).set(f32);
+
+  const node = audioCtxOut.createBufferSource();
+  node.buffer = buf;
+  node.connect(audioCtxOut.destination);
+
+  const when = Math.max(nextPlayTime, audioCtxOut.currentTime + 0.04);
+  node.start(when);
+  nextPlayTime = when + buf.duration;
+}
+
+// ── CLEANUP ────────────────────────────────────────────────────────
+function stopSession() {
+  try { if (scriptProc) scriptProc.disconnect(); } catch {}
+  try { if (audioCtxIn)  audioCtxIn.close();  } catch {}
+  try { if (audioCtxOut) audioCtxOut.close(); } catch {}
+  if (micStream) micStream.getTracks().forEach(t => t.stop());
+  if (ws) ws.close();
+  scriptProc = audioCtxIn = audioCtxOut = micStream = ws = null;
+  sessionActive = false;
+  nextPlayTime  = 0;
+  setState('idle'); setStatus('Conectando…');
+  document.getElementById('chat').innerHTML = '';
+}
+
+// ── UI ─────────────────────────────────────────────────────────────
 function addBubble(who, text) {
   const c = document.getElementById('chat');
   const d = document.createElement('div');
   d.className = 'bubble bubble-' + who;
   d.textContent = text;
-  c.appendChild(d); c.scrollTop = c.scrollHeight;
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
 }
 function setStatus(t) { document.getElementById('lunaStatus').textContent = t; }
 function setState(s) {

@@ -26,15 +26,11 @@ module.exports = async (req, res) => {
       })
     });
 
-    const data = await r.json();
-
-    if (!r.ok) {
-      return res.status(500).json({
-        error: `Google respondió ${r.status}: ${data.error?.message || JSON.stringify(data)}`
-      });
-    }
-
-    res.json({ token: data.name });
+    const rawText = await r.text();
+    res.status(500).json({
+      debug_status: r.status,
+      debug_body: rawText.slice(0, 500)
+    });
 
   } catch (e) {
     res.status(500).json({ error: 'Excepción: ' + e.message });

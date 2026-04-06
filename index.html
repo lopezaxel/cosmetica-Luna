@@ -1030,14 +1030,14 @@ REGLAS IMPORTANTES:
       try {
         const r = await fetch('/api/token');
         const d = await r.json();
-        if (!r.ok || !d.token) throw new Error(d.error || 'Sin token');
-        token = d.token;
+        if (!r.ok || !d.key) throw new Error(d.error || 'Sin key');
+        token = d.key;
       } catch(e) {
-        setStatus('Error al obtener token: ' + e.message);
+        setStatus('Error al obtener key: ' + e.message);
         return;
       }
 
-      const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?access_token=${token}`;
+      const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${token}`;
       ws = new WebSocket(url);
 
       ws.onopen = () => {

@@ -1000,7 +1000,6 @@ REGLAS IMPORTANTES:
 - Si ya tenés todos los datos, confirmá el turno y cerrá con entusiasmo.
 `.trim();
 
-    const apiKey = 'AIzaSyDqHS4BU5ISmDY2r9HaOU06osxY5-D0R0U';
     let ws = null;
     let audioCtxIn = null;   // micrófono → 16 kHz
     let audioCtxOut = null;   // reproducción → 24 kHz
@@ -1023,11 +1022,22 @@ REGLAS IMPORTANTES:
     }
 
     // ── GEMINI LIVE SESSION ────────────────────────────────────────────
-    function startSession() {
+    async function startSession() {
       if (ws) return;
       setStatus('Conectando…'); setState('idle');
 
-      const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
+      let token;
+      try {
+        const r = await fetch('/api/token');
+        const d = await r.json();
+        if (!r.ok || !d.token) throw new Error(d.error || 'Sin token');
+        token = d.token;
+      } catch(e) {
+        setStatus('Error al obtener token: ' + e.message);
+        return;
+      }
+
+      const url = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?access_token=${token}`;
       ws = new WebSocket(url);
 
       ws.onopen = () => {

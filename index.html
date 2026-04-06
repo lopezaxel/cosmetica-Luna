@@ -990,14 +990,16 @@ FLUJO DE AGENDADO:
 2. Preguntar qué servicio le interesa
 3. Si pregunta precios o diferencias, explicar brevemente
 4. Preguntar qué día y horario prefiere
-5. Pedir su nombre y apellido
-6. Confirmar el turno con todos los datos: nombre, servicio, precio, día y hora. Mencionar la seña del 30% y el recordatorio por WhatsApp.
+5. Pedir su nombre y apellido completo
+6. Pedir su número de celular para el recordatorio por WhatsApp
+7. Cuando tengas TODOS los datos (nombre, celular, servicio, fecha y hora), DEBÉS usar la función agendar_turno para registrar el turno. Esto es OBLIGATORIO antes de confirmar.
+8. Una vez que la función se ejecute, confirmá el turno con entusiasmo mencionando la seña del 30% y el recordatorio por WhatsApp.
 
 REGLAS IMPORTANTES:
 - Respuestas CORTAS: máximo 2 o 3 oraciones por mensaje.
 - Hablá en texto corrido, sin listas, asteriscos ni símbolos especiales.
 - Sé natural y conversacional, no robótica.
-- Si ya tenés todos los datos, confirmá el turno y cerrá con entusiasmo.
+- SIEMPRE usá la función agendar_turno cuando tengas todos los datos. No confirmes el turno sin haberla llamado.
 `.trim();
 
     let ws = null;
@@ -1053,7 +1055,23 @@ REGLAS IMPORTANTES:
                 }
               }
             },
-            system_instruction: { parts: [{ text: SYSTEM }] }
+            system_instruction: { parts: [{ text: SYSTEM }] },
+            tools: [{
+              function_declarations: [{
+                name: 'agendar_turno',
+                description: 'Registra un turno en la agenda cuando el cliente confirma todos los datos. Llamar esta función es OBLIGATORIO antes de confirmar el turno al cliente.',
+                parameters: {
+                  type: 'OBJECT',
+                  properties: {
+                    nombre: { type: 'STRING', description: 'Nombre y apellido completo del cliente' },
+                    celular: { type: 'STRING', description: 'Número de celular del cliente con código de área' },
+                    fecha_hora: { type: 'STRING', description: 'Fecha y hora del turno, ej: Lunes 14/04 a las 10:00' },
+                    servicio: { type: 'STRING', description: 'Nombre del servicio elegido con su precio' }
+                  },
+                  required: ['nombre', 'celular', 'fecha_hora', 'servicio']
+                }
+              }]
+            }]
           }
         }));
         setStatus('Esperando sesión…');
@@ -1093,6 +1111,16 @@ REGLAS IMPORTANTES:
         }
         if (msg.serverContent?.inputTranscription?.text && msg.serverContent.inputTranscription.finished) {
           addBubble('user', msg.serverContent.inputTranscription.text);
+        }
+
+        // Function call → agendar turno en Google Sheets
+        if (msg.toolCall) {
+          for (const fc of msg.toolCall.functionCalls || []) {
+            if (fc.name === 'agendar_turno') {
+              console.log('Function call agendar_turno:', fc.args);
+              agendarEnSheets(fc.id, fc.args);
+            }
+          }
         }
 
         // Turno completado → volver a escuchar
@@ -1222,6 +1250,38 @@ REGLAS IMPORTANTES:
       const o = document.getElementById('lunaOrb');
       o.className = 'luna-avatar-orb';
       if (s !== 'idle') o.classList.add(s);
+    }
+
+    // ── AGENDAR EN GOOGLE SHEETS ──────────────────────────────────────
+    async function agendarEnSheets(callId, args) {
+      let result = { success: true, message: 'Turno agendado correctamente' };
+      try {
+        const resp = await fetch('/api/sheets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(args),
+        });
+        const data = await resp.json();
+        if (!resp.ok) {
+          result = { success: false, message: data.error || 'Error al agendar' };
+        }
+      } catch (e) {
+        console.error('Error enviando a sheets:', e);
+        result = { success: false, message: 'Error de conexión al agendar' };
+      }
+
+      // Enviar respuesta del tool call a Gemini para que Luna continúe
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          toolResponse: {
+            functionResponses: [{
+              id: callId,
+              name: 'agendar_turno',
+              response: result
+            }]
+          }
+        }));
+      }
     }
   </script>
 </body>
